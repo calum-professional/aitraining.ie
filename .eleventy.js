@@ -1,7 +1,7 @@
 let branding = require('./src/_data/branding.json');
 let site = require('./src/_data/site.json');
 let fs = require('fs');
-let { makeSection, slugify, asAccordion } = require('./src/_includes/makeSection');
+let { makeSection, slugify, asAccordion, keywordInfo } = require('./src/_includes/makeSection');
 
 // this function makes a string safe for json
 // it removes the newline characters
@@ -86,6 +86,7 @@ module.exports = function(config) {
 
     // this filter is to fix the problem with the Azure and other MS courses where there is a : in the name
     config.addFilter("removeInvalidChars", function(filename) {
+        //console.log(filename);
         return filename.replace(/:/ig, "-");
     });
 
@@ -111,6 +112,8 @@ module.exports = function(config) {
     config.addFilter("testparam", function(item, a, b) {
         return `${item}-${a}-${b}-like`;
     });
+
+    config.addFilter("keywordInfo", keywordInfo);
 
     config.addFilter("formatScheduleInstance", function(instance, formatType="metadata",courseItem=null) {
   

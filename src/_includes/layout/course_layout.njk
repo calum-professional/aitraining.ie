@@ -7,6 +7,10 @@ layout: general_layout
   
   <h2>Course Description</h2>
   <p>{{ course.descrip }}</p>
+  <p>
+    <strong>Duration:</strong>
+    {{ course.durationDays }} days
+  </p>
   <hr class="my-2">
   
   <div class="ui course-paragraphs">
@@ -38,7 +42,7 @@ layout: general_layout
 
 <hr class="my-2">
 {% for searchword in course.searchWords.split(',') %}
-<button class="btn btn-light" href="/courses/searchWords/{{ searchword }}">{{ searchword }}</button>
+<a class="btn btn-light" href="/training_courses/{{ searchword | slug | removeInvalidChars }}">{{ searchword }}</a>
 {% endfor %}
 <hr class="my-2">
 </div>

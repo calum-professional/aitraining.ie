@@ -115,7 +115,8 @@ module.exports = async function() {
 
   return {
     courses: distinctCourseListWithSchedule, 
-    micrositeKeywords: json, 
+    micrositeKeywords: json,
+    relatedKeywords: distinctMicrositeKeywordList,
     msKeywordData, 
     savedSearches, 
     schedule

@@ -1,14 +1,15 @@
 ---
 layout: general_layout
 title: Courses
+description: Training Courses
 tags: [main]
 page:
-    type: course
+    type: home
 ---
 
 
 <hr class="my-2">
-<h1>{{ site.organisation.searchKeywords }} Courses</h1>
+<h1>{% for keyword in site.searchKeywords %} {{ keyword }} {% endfor %} Training Courses</h1>
 
 <table class="table">
 <thead>
