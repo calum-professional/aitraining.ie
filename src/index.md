@@ -1,6 +1,6 @@
 ---
 layout: homepage_layout
-title: Adobe InDesign Training Courses | Dublin Cork Limerick Ireland
+title: AI Training Courses | Dublin Cork Limerick Ireland
 page:
     type: home
 ---

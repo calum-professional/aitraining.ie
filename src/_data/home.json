@@ -1,65 +1,59 @@
 {
-    "sections":[
+    "sections": [
         {
             "id": "top",
-            "link": "/#top", 
-            "text": "Home",  
+            "link": "/#top",
+            "text": "Home",
             "type": "placeholder"
-        }, 
+        },
         {
-            "id": "banner", 
-            "link": "no", 
-            "type": "banner", 
-            "title": "Adobe Training Courses Ireland", 
-            "subtitle": "Contact us for all your Adobe training requirements", 
-            "background": "img/ground@-min.png",
-            "image": "img/adobelogos.png"
-        },        
-        {
-            "id": "indesign",
-            "link": "/#indesign", 
-            "text": "About InDesign", 
-            "title": "About InDesign", 
-            "type": "keywordtext",
-            "image": "img/adobeindesignlogo.png", 
-            "imagePosition": "right",
-            "content":{
-                "title1": "Powerful Features...",
-                "text1": "Built for demanding workflows, InDesign integrates smoothly with Adobe Photoshop, Illustrator, Acrobat, InCopy, and Dreamweaver software.   InDesign offers powerful features for creating richer, more complex documents and reliably outputs pages to multiple media.",
-                "title2": "Why attend one of our Adobe InDesign courses?",
-                "text2": "Attending our <a href=/courses>InDesign courses</a> allows participants to explore more creative possibilities and experience new levels of productivity using Adobe InDesign page layout software.  Our course attendees learn how - with its sophisticated design features and enhanced productivity tools for streamlining repetitive task - InDesign lets you work faster and better than ever."
+            "id": "banner",
+            "link": "no",
+            "type": "banner",
+            "title": "AI Training Courses Ireland",
+            "subtitle": "Practical, instructor-led AI courses in Dublin, Cork, Limerick and live online. Learn to use AI tools confidently, safely and well.",
+            "illustration": {
+                "src": "/img/undraw-chat-with-ai.svg",
+                "width": 801,
+                "height": 567
             }
         },
         {
-            "id": "illustrator",
-            "link": "/#illustrator", 
-            "text": "About Illustrator", 
-            "title": "About Illustrator", 
-            "type": "keywordtext",
-            "image": "img/adobeillustratorlogo.png", 
-            "imagePosition": "left",
-            "content":{
-                "title1": "Creat sophisticated artwork...",
-                "text1": "Adobe Illustrator software allows you to create sophisticated artwork for virtually any medium. Industry-standard drawing tools, flexible colour controls and professional type controls help you capture your ideas and experiment freely.",
-                "title2": "Why attend one of our Adobe Illustrator courses?",
-                "text2": "Taking our <a href = /courses> courses </a> will highlight timesaving features such as easier-to-access options to let you work quickly and intuitively.  Gaining skills in the improved performance and tight integration with other Adobe applications will also help you produce extraordinary graphics for print, web and interactive, and mobile and motion designs."
+            "id": "about",
+            "link": "/#about",
+            "text": "About",
+            "title": "About our AI courses",
+            "type": "text",
+            "content": [
+                "Generative AI tools such as ChatGPT and Microsoft Copilot can draft documents, summarise reports and meetings, analyse data and answer questions in plain language. Used well, they save time on everyday tasks and help teams produce better work in almost every role.",
+                "Our instructor-led <a href=/courses/>courses</a> give you the practical skills to use these tools confidently and responsibly. You will learn how to write clear requests, check AI output for accuracy, protect sensitive information and build AI into your daily work. For managers, we also cover where AI adds real value, how to assess the risks and how to plan a successful rollout. No technical background is needed."
+            ],
+            "illustration": {
+                "src": "/img/undraw-teacher.svg",
+                "width": 960,
+                "height": 621
             }
         },
         {
-            "id": "photoshop",
-            "link": "/#photoshop", 
-            "text": "About Photoshop", 
-            "title": "About Photoshop", 
-            "type": "keywordtext",
-            "image": "img/adobephotoshoplogo.png", 
-            "imagePosition": "right",
-            "content":{
-                "title1": "Capable of just about anything...",
-                "text1": "Adobe Photoshop is software that is extensively used for raster image editing, graphic design and digital art. It makes use of layering to allow for depth and flexibility in the design and editing process, as well as provide powerful editing tools, that when combined, are capable of just about anything.",
-                "title2": "Why attend one of our Adobe Photoshop courses?",
-                "text2": "Taking a course on Adobe Photoshop is essential if you work in a graphic design, web design, or user experience roles. It is also equally important to learn Photoshop for those working in hands-on marketing roles. Whether creating flyers, brochures, or email newsletters, there is a need to know Photoshop for optimizing and retouching images. You can learn Photoshop even if you are a beginner with no previous experience on <a href=/courses>our expert instructor-led courses.</a>"
-
-            }
+            "id": "testimonials",
+            "link": "/#testimonials",
+            "type": "quotes",
+            "title": "What our attendees say",
+            "content": {
+                "quotes": [
+                    {
+                        "text": "Placeholder testimonial. Replace this with a short quote from a real course attendee about what they learned and how it helped them.",
+                        "name": "Attendee name",
+                        "jobtitle": "Job title, Organisation"
+                    }
+                ]
+            },
+            "text": "Testimonials"
         }
-    ] 
+    ],
+    "topicIndexIllustration": {
+        "src": "/img/undraw-destination.svg",
+        "width": 1033,
+        "height": 836
+    }
 }

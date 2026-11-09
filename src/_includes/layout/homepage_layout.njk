@@ -7,5 +7,4 @@ layout: base_layout
 
 {% endfor %}
 
-
-{{ coursesapifull.savedSearches | asAccordion | safe }}
+{{ coursesapifull.savedSearches | asAccordion(home.topicIndexIllustration) | safe }}

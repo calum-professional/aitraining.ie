@@ -1,36 +1,35 @@
-<section id="footer" class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 footer-box">
-          
-          <b>TRAINING</b>
-          {% for text in seo.footertext %}
-            <p>{{ text }}</p>
-          {% endfor %}
-        </div>
-        <div class="col-md-4 footer-box">
-            <p id="contact"><b>OUR OFFICES</b></p>
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <section class="site-footer__about" aria-labelledby="footer-training">
+      <h2 id="footer-training">{{ site.searchKeywords[0] }} training</h2>
+      {% for text in seo.footertext %}
+        <p>{{ text }}</p>
+      {% endfor %}
+      <p><a href="/courses/">View all courses</a></p>
+    </section>
 
-            <p><i class="fa fa-map-marker"></i>{{ site.address.line1 }}, {{ site.address.line2 }}, {{ site.address.town }}, {{ site.address.county }}, {{ site.address.country }}</p>
-            <p><i class="fa fa-map-marker"></i>{{ site.addressDublin.line1 }}, {{ site.addressDublin.line2 }}, {{ site.addressDublin.town }}, {{ site.addressDublin.county }}, {{ site.addressDublin.country }}</p>
-            <p><i class="fa fa-map-marker"></i>{{ site.addressLimerick.line1 }}, {{ site.addressLimerick.line2 }}, {{ site.addressLimerick.county }}, {{ site.addressLimerick.country }}</p>
-        </div>
-        <div class="col-md-4 footer-box">
-          <p id="contact"><b>CONTACT US</b></p>
-          
-          <p><i class="fa fa-phone"></i>{{ site.phone }} (Cork)</p>
-          <p><i class="fa fa-phone"></i>{{ site.phoneDublin }} (Dublin)</p>
-          <p><i class="fa fa-phone"></i>{{ site.phoneLimerick }} (Limerick)</p>
-          <p><i class="fa fa-envelope-o"></i><a href="mailto:{{ site.email }}">{{site.email}}</a></p> 
-        </div>
-        <div class="col-md-6 ">
-          <p class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear())</script>. All rights reserved | Designed by <a href="{{ site.designer.link }}">{{ site.designer.name }}</a></p>
-        </div>
-        <div class="col-md-6 text-right">
-        <p class="copyright">
-        </p>
-        </div>
-      </div>
-      <br>
-    </div>
-</section>
+    <section aria-labelledby="footer-offices">
+      <h2 id="footer-offices">Our offices</h2>
+      <address>
+        <p><strong>Cork</strong><br>{{ site.address.line1 }}, {{ site.address.line2 }}, {{ site.address.town }}, {{ site.address.county }} {{ site.address.postcode }}</p>
+        <p><strong>Dublin</strong><br>{{ site.addressDublin.line1 }}, {{ site.addressDublin.line2 }}, {{ site.addressDublin.town }}, {{ site.addressDublin.county }} {{ site.addressDublin.postcode }}</p>
+        <p><strong>Limerick</strong><br>{{ site.addressLimerick.line1 }}, {{ site.addressLimerick.line2 }}, {{ site.addressLimerick.county }} {{ site.addressLimerick.postcode }}</p>
+      </address>
+    </section>
+
+    <section id="contact" aria-labelledby="footer-contact">
+      <h2 id="footer-contact">Contact us</h2>
+      <ul class="contact-list">
+        <li>Cork <a href="tel:{{ site.phone | replace(' ', '') }}">{{ site.phone }}</a></li>
+        <li>Dublin <a href="tel:{{ site.phoneDublin | replace(' ', '') }}">{{ site.phoneDublin }}</a></li>
+        <li>Limerick <a href="tel:{{ site.phoneLimerick | replace(' ', '') }}">{{ site.phoneLimerick }}</a></li>
+        <li>Email <a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="wrap site-footer__legal">
+    <p>&copy; {% year %} {{ site.organisation.name }}. All rights reserved.</p>
+    <p><a href="/privacy/">Privacy policy</a> <span aria-hidden="true">/</span> Designed by <a href="{{ site.designer.link }}">{{ site.designer.name }}</a></p>
+  </div>
+</footer>

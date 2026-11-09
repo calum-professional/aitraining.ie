@@ -1,50 +1,71 @@
 ---
-layout: general_layout
+layout: base_layout
 ---
-  <hr class="my-2">
-  <h1>{{ course.name }}</h1>
-  <hr class="my-3">
-  
-  <h2>Course Description</h2>
-  <p>{{ course.descrip }}</p>
-  <p>
-    <strong>Duration:</strong>
-    {{ course.durationDays }} days
-  </p>
-  <hr class="my-2">
-  
-  <div class="ui course-paragraphs">
-  {% for paragraph in course.paragraphs %}
-    <h3>{{ paragraph.title }}</h3>
-    <p>{{ paragraph.text | convertLineBreaks | safe }}</p>
-  {% endfor %}
-</div>
+<article class="course">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="/courses/">Courses</a></p>
+      <h1>{{ course.name }}</h1>
+      <p class="page-head__lead">{{ course.descrip }}</p>
+      <dl class="facts">
+        <div><dt>Duration</dt><dd>{{ course.durationDays }} {% if course.durationDays == 1 %}day{% else %}days{% endif %}</dd></div>
+        <div><dt>Format</dt><dd>Instructor-led, in person or live online</dd></div>
+        {% set next = course.schedule | nextDate %}
+        {% if next %}
+        <div><dt>Next date</dt><dd><a href="#dates">{{ next | displayDate }}</a></dd></div>
+        {% endif %}
+      </dl>
+    </div>
+  </header>
 
-<div>
+  {% if course.paragraphs and course.paragraphs.length > 0 %}
+  <section class="wrap course-outline" aria-labelledby="outline-heading">
+    <h2 id="outline-heading">What the course covers</h2>
+    <div class="outline-grid">
+    {% for paragraph in course.paragraphs %}
+      <div class="outline-item">
+        <h3>{{ paragraph.title }}</h3>
+        {{ paragraph.text | courseText | safe }}
+      </div>
+    {% endfor %}
+    </div>
+  </section>
+  {% endif %}
 
-{% if course.schedule != null and course.schedule.length > 0 %}
-<hr class="my-2">
-<h2>Schedule</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th><th>Date</th><th>Location</th><th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-{% for instance in course.schedule %}
-    {{ instance | formatScheduleInstance("table", course) | safe }}
-{% endfor %}
-    </tbody>
-</table>
-{% endif %}
+  <section class="band" id="dates" aria-labelledby="dates-heading">
+    <div class="wrap">
+      <h2 id="dates-heading">Course dates</h2>
+      {% if course.schedule != null and course.schedule.length > 0 %}
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption class="visually-hidden">Scheduled dates for {{ course.name }}</caption>
+          <thead>
+            <tr><th scope="col">Date</th><th scope="col">Location</th><th scope="col"><span class="visually-hidden">Booking</span></th></tr>
+          </thead>
+          <tbody>
+          {% for instance in course.schedule %}
+            {{ instance | formatScheduleInstance("table", course) | safe }}
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>There are no public dates for this course yet. We also run it on request for teams. <a href="#contact">Contact us</a> to arrange a date.</p>
+      {% endif %}
+    </div>
+  </section>
 
-
-<hr class="my-2">
-{% for searchword in course.searchWords.split(',') %}
-<a class="btn btn-light" href="/training_courses/{{ searchword | slug | removeInvalidChars }}">{{ searchword }}</a>
-{% endfor %}
-<hr class="my-2">
-</div>
+  {% set words = course.searchWords.split(',') %}
+  <section class="wrap related" aria-labelledby="related-heading">
+    <h2 id="related-heading">Related topics</h2>
+    <ul class="tag-list">
+    {% for searchword in words %}
+      {% if searchword | trim %}
+      <li><a href="/training_courses/{{ searchword | trim | replace("#", " sharp") | replace("+", " plus") | slug | removeInvalidChars }}/">{{ searchword | trim }}</a></li>
+      {% endif %}
+    {% endfor %}
+    </ul>
+  </section>
+</article>
 
 {% include "StructuredData/instances.njk" %}

@@ -10,6 +10,22 @@ function makeSafeForJson(item) {
     return item.replaceAll(/[\r\n]/gm, "");
 }
 
+// "2026-10-12" -> "Mon 12 Oct 2026"
+function displayDate(strDate) {
+    if (!strDate) return "";
+    let [year, month, day] = String(strDate).split("-").map(Number);
+    let date = new Date(Date.UTC(year, month - 1, day));
+    if (isNaN(date)) return strDate;
+    return date.toLocaleDateString("en-IE", { weekday: "short", day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+}
+
+// course outline text arrives as newline-separated topics; show those as a list
+function courseText(text) {
+    let lines = String(text || "").split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+    if (lines.length <= 1) return `<p>${lines.join("")}</p>`;
+    return `<ul>${lines.map(line => `<li>${line}</li>`).join("")}</ul>`;
+}
+
 // this function formats date strings in ISO Date format
 
 function getInstanceDateInfo(strDate, duration) {
@@ -87,10 +103,22 @@ module.exports = function(config) {
     // this filter is to fix the problem with the Azure and other MS courses where there is a : in the name
     config.addFilter("removeInvalidChars", function(filename) {
         //console.log(filename);
-        return filename.replace(/:/ig, "-");
+        // ":" becomes "-", other characters Windows doesn't allow in file names are dropped (e.g. "Excel ***")
+        return filename.replace(/:/ig, "-").replace(/[*?"<>|]/g, "");
     });
 
     config.addFilter("slugify", slugify);
+
+    config.addFilter("displayDate", displayDate);
+    config.addFilter("courseText", courseText);
+
+    // first scheduled date that hasn't passed yet ("" if none), as of the build
+    config.addFilter("nextDate", function(schedule) {
+        let today = new Date().toISOString().slice(0, 10);
+        let next = (schedule || []).find(instance => instance.date > today);
+        return next ? next.date : "";
+    });
+    config.addShortcode("year", () => `${new Date().getFullYear()}`);
     
     config.addFilter("asAccordion", asAccordion);
 
@@ -121,18 +149,12 @@ module.exports = function(config) {
       
        switch(formatType) {
             case "table":
+                // js/site.js swaps the Book link for "Completed" once the date has passed
                 return `<tr>
-                    <td>${instance.name}</td>
-                    <td>${instance.date}</td>
+                    <td><time datetime="${instance.date}">${displayDate(instance.date)}</time></td>
                     <td>${instance.location}</td>
-                    <td>
-                        <script>
-                        {
-                        
-                            displayIfDateInFuture("${instance.date}", '<a class="btn btn-primary" href="https://www.professional.ie/course_schedule/${filename}.html?id=${instance.id}">Book</a>','<span>Completed</span>');
-
-                        }
-                        </script>
+                    <td class="data-table__action">
+                        <a class="button button--small" data-course-date="${instance.date}" href="https://www.professional.ie/course_schedule/${filename}.html?id=${instance.id}">Book<span class="visually-hidden"> ${instance.name}, ${displayDate(instance.date)}, ${instance.location}</span></a>
                     </td>
                     </tr>`;
                 break;
@@ -183,7 +205,7 @@ module.exports = function(config) {
     config.addFilter("makeSection", makeSection);
 
     config.addFilter("convertLineBreaks", function(text) {
-        return text.replace(/\r\n/g, "<br>");
+        return text.replace(/\r?\n/g, "<br>");
     })
 
     return {

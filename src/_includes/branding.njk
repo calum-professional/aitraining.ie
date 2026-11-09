@@ -1,9 +1,14 @@
 <style>
 :root {
     --primary_color: {{ branding.primary_color }};
+    --primary_strong_color: {{ branding.primary_strong_color or branding.primary_color }};
     --secondary_color: {{ branding.secondary_color }};
     --foreground_color: {{ branding.foreground_color }};
     --secondary_foreground_color: {{ branding.secondary_foreground_color }};
+    --highlight_color: {{ branding.highlight_color or branding.secondary_color }};
+    --accent_soft_color: {{ branding.accent_soft_color or branding.secondary_color }};
+    --accent_deep_color: {{ branding.accent_deep_color or branding.foreground_color }};
+    --warm_soft_color: {{ branding.warm_soft_color or branding.secondary_color }};
     --gradient_start: {{ branding.primary_color }};
     --gradient_end: {{ branding.secondary_color }};
 }

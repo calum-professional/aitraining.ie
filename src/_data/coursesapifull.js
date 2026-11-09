@@ -75,6 +75,10 @@ module.exports = async function() {
   });
 
 
+  // the API can return the same keyword more than once, which creates duplicate pages
+  json = json.filter((keyword, index, list) =>
+    list.findIndex(k => k.keyword.toLowerCase() == keyword.keyword.toLowerCase()) == index);
+
   let msKeywordData = json.map(keyword=> {
    
     //console.log(keyword);

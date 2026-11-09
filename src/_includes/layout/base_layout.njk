@@ -1,26 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IE">
 
   {% include "htmlhead.njk" %}
 
   <body id="top">
-    <div class="content">
+    <a class="skip-link" href="#main">Skip to content</a>
 
-      {% include "nav.njk" %}
+    {% include "nav.njk" %}
 
-
+    <main id="main" class="site-main" tabindex="-1">
       {{ content | safe }}
-
-    </div>
-
+    </main>
 
     {% include "footer.njk" %}
-
-    <script>
-      AOS.init({
-        offset: 100
-      });
-    </script>
-
   </body>
 </html>

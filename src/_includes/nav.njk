@@ -1,28 +1,32 @@
-    <!-- Navbar Menu  ---->
-    <section id="nav-bar">
-      <nav class="navbar navbar-expand-lg navbar-light">
-         <a class="navbar-brand" href="#">
-           <img src="{{ site.logo }}" alt="">
-         </a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-           <i class="fa fa-bars"></i>
-         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href="/">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="8"/>
+            <path d="M9 22l5-12h4l5 12h-3.4l-1-2.6h-5.2l-1 2.6zm5.4-5.4h3.2L16 12.4z"/>
+          </svg>
+          <span class="brand__text">
+            <span class="brand__name">{{ site.searchKeywords[0] }} Training</span>
+            <span class="brand__org">{{ site.organisation.name }}</span>
+          </span>
+        </a>
 
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          Menu
+        </button>
+
+        <nav class="site-nav" id="site-menu" aria-label="Main">
+          <ul>
             {% for item in home.sections %}
               {% if item.link != "no" %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ item.link }}">{{ item.text }}</a>
-                </li>
+                <li><a href="{{ item.link }}">{{ item.text }}</a></li>
               {% endif %}
             {% endfor %}
             {% for item in collections.main %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ item.url }}" title="{{ item.data.description }}">{{ item.data.title }}</a>
-                </li>
+                <li><a href="{{ item.url }}"{% if item.url == page.url %} aria-current="page"{% endif %}>{{ item.data.title }}</a></li>
             {% endfor %}
           </ul>
-        </div>
-      </nav>
-    </section>
+        </nav>
+      </div>
+    </header>

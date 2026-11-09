@@ -1,25 +1,28 @@
 ---
-layout: general_layout
+layout: base_layout
 ---
+<header class="page-head">
+  <div class="wrap">
+    <h1>{{ search.title }}</h1>
+  </div>
+</header>
 
-<hr class="my-2">
-<h1>{{ search.title }}</h1>
-  <hr class="my-3">
-  
- 
-  <!-- debugging tip - pipe an object through the json filter to see what it is -->
-  <!--{{ keyword | json}} -->
-
-  
-  <div class="ui">
+<div class="wrap page">
+  {% if search.paragraphs and search.paragraphs.length > 0 %}
+  <div class="prose">
   {% for paragraph in search.paragraphs %}
     <p>{{ paragraph | convertLineBreaks | safe }}</p>
   {% endfor %}
   </div>
+  {% endif %}
 
+  <h2>Courses</h2>
+  <ul class="course-list">
   {% for course in search.courses %}
-
-    <p> <a href="/courses/{{course.name | slug | removeInvalidChars}}">{{ course.name}}</a> </p>
-
+    <li>
+      <h3><a href="/courses/{{ course.name | slug | removeInvalidChars }}/">{{ course.name }}</a></h3>
+      <p>{{ course.descrip | truncate(220) }}</p>
+    </li>
   {% endfor %}
-
+  </ul>
+</div>
