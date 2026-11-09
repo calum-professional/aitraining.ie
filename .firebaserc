@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "adobemicrosite"
-  }
+    "default": "aitrainingmicrosite",
+    "aitrainingmicrosite": "aitrainingmicrosite"
+  },
+  "targets": {},
+  "etags": {}
 }
