@@ -1,1 +1,1 @@
-# aitraining.ie
+# aitrainingcourses.ie
