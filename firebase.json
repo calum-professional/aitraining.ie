@@ -5,6 +5,13 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "redirects": [
+      {
+        "source": "/courses/copilot-in-excel-for-accountants--practical-ai-for-finance-tasks{,/**}",
+        "destination": "/courses/copilot-in-excel-for-accountants-practical-ai-for-finance-tasks/",
+        "type": 301
+      }
     ]
   }
 }
