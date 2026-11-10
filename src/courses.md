@@ -19,7 +19,7 @@ pageType: courses
 <li>
 <h2><a href="/courses/{{ course.name | slug | removeInvalidChars }}/">{{ course.name }}</a></h2>
 <p>{{ course.descrip | truncate: 220 }}</p>
-<p class="course-list__meta">{{ course.durationDays }} {% if course.durationDays == 1 %}day{% else %}days{% endif %}{% assign next = course.schedule | nextDate %}{% if next != "" %}, next date {{ next | displayDate }}{% endif %}</p>
+{% assign meta = course | courseMeta %}{% if meta != "" %}<p class="course-list__meta">{{ meta }}</p>{% endif %}
 </li>
 {% endfor %}
 </ul>

@@ -20,7 +20,7 @@
           <ul>
             {% for item in home.sections %}
               {% if item.link != "no" %}
-                <li><a href="{{ item.link }}">{{ item.text }}</a></li>
+                <li><a href="{{ item.link }}"{% if item.link == page.url %} aria-current="page"{% endif %}>{{ item.text }}</a></li>
               {% endif %}
             {% endfor %}
             {% for item in collections.main %}

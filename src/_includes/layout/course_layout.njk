@@ -8,7 +8,8 @@ layout: base_layout
       <h1>{{ course.name }}</h1>
       <p class="page-head__lead">{{ course.descrip }}</p>
       <dl class="facts">
-        <div><dt>Duration</dt><dd>{{ course.durationDays }} {% if course.durationDays == 1 %}day{% else %}days{% endif %}</dd></div>
+        {% set duration = course.durationDays | formatDuration %}
+        {% if duration %}<div><dt>Duration</dt><dd>{{ duration }}</dd></div>{% endif %}
         <div><dt>Format</dt><dd>Instructor-led, in person or live online</dd></div>
         {% set next = course.schedule | nextDate %}
         {% if next %}

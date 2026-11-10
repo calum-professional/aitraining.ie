@@ -27,23 +27,52 @@ function courseText(text) {
     return `<ul>${lines.map(line => `<li>${line}</li>`).join("")}</ul>`;
 }
 
-// this function formats date strings in ISO Date format
+// course length in days from the API's durationDays, e.g. 0.5, 1, 3 ("" or 0 when not set)
+function durationInDays(duration) {
+    let days = parseFloat(duration);
+    return days > 0 ? days : 0;
+}
 
+// how a course length reads on the site: "Half day", "1 day", "1.5 days", "3 days".
+// Returns "" when the course has no length set, so templates can leave it out.
+function formatDuration(duration) {
+    let days = durationInDays(duration);
+    if (!days) return "";
+    if (days < 0.5) return "Under half a day";
+    if (days == 0.5) return "Half day";
+    return `${days} ${days == 1 ? "day" : "days"}`;
+}
+
+// first scheduled date that hasn't passed yet ("" if none), as of the build
+function nextDate(schedule) {
+    let today = new Date().toISOString().slice(0, 10);
+    let next = (schedule || []).find(instance => instance.date > today);
+    return next ? next.date : "";
+}
+
+// start, end and length of one scheduled date, for structured data.
+// A day runs 10:30 to 17:00; a course of n days ends on its nth day, and a
+// course shorter than a day ends partway through its first day.
 function getInstanceDateInfo(strDate, duration) {
 
+    let days = durationInDays(duration);
     let startDate = new Date(strDate);
-    startDate.setHours(10);
-    startDate.setMinutes(30);
-    let endDate = new Date(strDate);
-    endDate.setDate(endDate.getDate() + parseInt(duration));
-    endDate.setHours(17);
-    endDate.setMinutes(0);
+    startDate.setHours(10, 30, 0, 0);
 
-    return {
-        startDate:`${startDate.toISOString()}`, 
-        endDate:`${endDate.toISOString()}`, 
-        duration:`P${duration}D`
+    let endDate = new Date(strDate);
+    if (days > 0 && days < 1) {
+        endDate = new Date(startDate.getTime() + days * 6.5 * 60 * 60 * 1000);
+    } else {
+        endDate.setDate(endDate.getDate() + Math.max(Math.ceil(days), 1) - 1);
+        endDate.setHours(17, 0, 0, 0);
     }
+
+    let info = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString()
+    };
+    if (days) info.duration = `P${days}D`;
+    return info;
 }
 
 // the offices, with their addresses from site.json
@@ -130,10 +159,17 @@ module.exports = function(config) {
     config.addFilter("courseText", courseText);
 
     // first scheduled date that hasn't passed yet ("" if none), as of the build
-    config.addFilter("nextDate", function(schedule) {
-        let today = new Date().toISOString().slice(0, 10);
-        let next = (schedule || []).find(instance => instance.date > today);
-        return next ? next.date : "";
+    config.addFilter("nextDate", nextDate);
+
+    config.addFilter("formatDuration", formatDuration);
+
+    // the line under each course in course lists, e.g. "Half day, next date Fri 13 Nov 2026"
+    config.addFilter("courseMeta", function(course) {
+        let duration = formatDuration(course.durationDays);
+        let next = nextDate(course.schedule);
+        let nextText = next ? `next date ${displayDate(next)}` : "";
+        if (duration && nextText) return `${duration}, ${nextText}`;
+        return duration || (nextText ? "N" + nextText.slice(1) : "");
     });
     config.addShortcode("year", () => `${new Date().getFullYear()}`);
     

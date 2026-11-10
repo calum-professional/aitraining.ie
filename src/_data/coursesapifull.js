@@ -64,16 +64,18 @@ module.exports = async function() {
     }
   });
 
-  // courses named in site.json "featuredCourses" go first (in that order) on the
-  // Courses and Schedule pages; the rest keep the API's order
-  let featuredNames = (site.featuredCourses || []).map(name => name.trim().toLowerCase());
+  // courses in the course groups named in site.json "featuredGroups" go first on the
+  // Courses and Schedule pages, group by group in that order; everything else keeps
+  // the API's order (as does each course within its group)
+  let normalise = text => String(text || "").replace(/&amp;/g, "&").trim().toLowerCase();
+  let featuredGroups = (site.featuredGroups || []).map(normalise);
   let featuredRank = course => {
-    let rank = featuredNames.indexOf(String(course.name).trim().toLowerCase());
-    return rank == -1 ? featuredNames.length : rank;
+    let rank = featuredGroups.indexOf(normalise(course.group));
+    return rank == -1 ? featuredGroups.length : rank;
   };
-  featuredNames.forEach((name, i) => {
+  featuredGroups.forEach((group, i) => {
     if (!distinctCourseListWithSchedule.some(course => featuredRank(course) == i)) {
-      console.warn(`[featuredCourses] no course called "${site.featuredCourses[i]}" - check the name in site.json`);
+      console.warn(`[featuredGroups] no courses in a group called "${site.featuredGroups[i]}" - check the name in site.json`);
     }
   });
   let coursesFeaturedFirst = distinctCourseListWithSchedule

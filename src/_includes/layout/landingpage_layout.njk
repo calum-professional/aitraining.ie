@@ -25,8 +25,8 @@ layout: base_layout
     <li>
       <h3><a href="/courses/{{ course.name | slug | removeInvalidChars }}/">{{ course.name }}</a></h3>
       <p>{{ course.descrip | truncate(220) }}</p>
-      {% set next = course.schedule | nextDate %}
-      <p class="course-list__meta">{{ course.durationDays }} {% if course.durationDays == 1 %}day{% else %}days{% endif %}{% if next %}, next date {{ next | displayDate }}{% endif %}</p>
+      {% set meta = course | courseMeta %}
+      {% if meta %}<p class="course-list__meta">{{ meta }}</p>{% endif %}
     </li>
   {% endfor %}
   </ul>
