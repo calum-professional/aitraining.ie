@@ -64,6 +64,23 @@ module.exports = async function() {
     }
   });
 
+  // courses named in site.json "featuredCourses" go first (in that order) on the
+  // Courses and Schedule pages; the rest keep the API's order
+  let featuredNames = (site.featuredCourses || []).map(name => name.trim().toLowerCase());
+  let featuredRank = course => {
+    let rank = featuredNames.indexOf(String(course.name).trim().toLowerCase());
+    return rank == -1 ? featuredNames.length : rank;
+  };
+  featuredNames.forEach((name, i) => {
+    if (!distinctCourseListWithSchedule.some(course => featuredRank(course) == i)) {
+      console.warn(`[featuredCourses] no course called "${site.featuredCourses[i]}" - check the name in site.json`);
+    }
+  });
+  let coursesFeaturedFirst = distinctCourseListWithSchedule
+    .map((course, index) => ({ course, index }))
+    .sort((a, b) => featuredRank(a.course) - featuredRank(b.course) || a.index - b.index)
+    .map(item => item.course);
+
   url = `http://professional.ie/api/getLandingPageTextForKeywords.php?keywords[]=${distinctMicrositeKeywordList.join("&keywords[]=")}`;
 
   console.log(url);
@@ -117,7 +134,7 @@ module.exports = async function() {
   });
 
   return {
-    courses: distinctCourseListWithSchedule, 
+    courses: coursesFeaturedFirst,
     micrositeKeywords: json,
     relatedKeywords: distinctMicrositeKeywordList,
     msKeywordData, 

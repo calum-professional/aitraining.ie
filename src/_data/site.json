@@ -1,6 +1,11 @@
 {
     "searchKeywords": ["AI"],
     "searchLocations": ["Dublin", "Cork", "Limerick", "Ireland"],
+    "featuredCourses": [
+        "Claude Code for Business Automation",
+        "AI-Assisted Data Automation",
+        "AI in Excel using ChatGPT and Copilot"
+    ],
     "homepageTitle": "Training Courses - Dublin Cork Limerick Ireland", 
     "organisation": {
         "name": "Professional Training Solutions Ltd",
