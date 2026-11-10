@@ -277,13 +277,27 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
     max-width: 32rem;
     animation: fade-in 1.5s ease-out 0.2s both;
 }
-@keyframes fade-in {
-    from { opacity: 0; transform: translateY(8px); }
+/* Banner text entrance: the headline word by word, then the intro, then the buttons.
+   --w is each word's position and --words the word count, both set in makeSection.js. */
+@media (prefers-reduced-motion: no-preference) {
+    .hero__word {
+        display: inline-block;
+        animation: rise-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+        animation-delay: calc(0.1s + var(--w, 0) * 90ms);
+    }
+    .hero__lead,
+    .hero__actions {
+        animation: rise-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+        animation-delay: calc(0.25s + var(--words, 4) * 90ms);
+    }
+    .hero__actions { animation-delay: calc(0.4s + var(--words, 4) * 90ms); }
+}
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: none; }
 }
-
-@keyframes reply-in {
-    from { opacity: 0; transform: translateY(6px); }
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: none; }
 }
 
@@ -342,6 +356,9 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
     border-radius: var(--radius-l);
     box-shadow: 0 1px 0 var(--line), 0 20px 40px -30px rgba(14, 107, 87, 0.5);
 }
+.quote { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.quote:hover { transform: translateY(-4px); }
+.topic--quotes .quote:hover { box-shadow: 0 32px 56px -28px rgba(0, 0, 0, 0.5); }
 .quote blockquote { margin: 0 0 1.5rem; }
 .quote blockquote::before {
     content: "\201C";
@@ -351,6 +368,10 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
     font-size: 5rem;
     line-height: 1;
     color: var(--accent);
+}
+.quote blockquote::before {
+    transform-origin: 20% 80%;
+    transition: transform 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) 0.35s, opacity 0.3s ease 0.35s;
 }
 .quote blockquote p { margin: 0; font-size: var(--step-1); line-height: 1.5; }
 .quote figcaption {
@@ -366,52 +387,104 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
 .quote figcaption strong { color: var(--ink); font-size: var(--step-0); }
 .quote img { border-radius: 50%; }
 
+/* Closing call to action: light green, echoing the banner at the top of the page */
+.cta {
+    background: var(--accent-soft);
+    padding-block: var(--space);
+}
+.cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.5rem clamp(2rem, 6vw, 5rem);
+    align-items: end;
+}
+.cta__text h2 { max-width: 20ch; }
+.cta__text p { max-width: 54ch; margin: 0; font-size: var(--step-1); line-height: 1.5; color: var(--muted); }
+.cta__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0; }
+.cta__note {
+    grid-column: 1 / -1;
+    margin: 0.5rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+}
+.cta__note a { font-weight: 700; }
+@media (max-width: 54rem) {
+    .cta__inner { grid-template-columns: 1fr; align-items: start; }
+}
+@media (max-width: 36rem) {
+    .cta__actions .button { flex: 1 1 100%; }
+}
+
+/* Scroll-in animations for section illustrations and testimonial cards.
+   The <head> script adds .js before anything is drawn, so these start hidden with no flicker;
+   js/site.js adds .is-visible when each one comes into view, then .is-settled once it has arrived.
+   Without JavaScript, or with reduced motion, none of this applies and everything just shows. */
+@media (prefers-reduced-motion: no-preference) {
+    .js .topic .split__image,
+    .js .quote,
+    .js .cta__inner {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+        transition-delay: calc(var(--i, 0) * 140ms);
+    }
+    .js .topic .split__image { transform: translateX(32px) scale(0.96); }
+    .js .quote blockquote::before { opacity: 0; transform: scale(0.3) rotate(-14deg); }
+
+    .js .topic .split__image.is-visible,
+    .js .quote.is-visible,
+    .js .cta__inner.is-visible { opacity: 1; transform: none; }
+    .js .quote.is-visible blockquote::before { opacity: 1; transform: none; }
+
+    /* after arriving: the card gets its hover lift back, the illustration drifts gently */
+    .js .quote.is-settled { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .js .quote.is-settled:hover { transform: translateY(-4px); }
+    .js .topic .split__image.is-settled { animation: drift 7s ease-in-out infinite; }
+}
+@keyframes drift {
+    50% { translate: 0 -8px; }
+}
+
 /* Index of every topic and location (internal links for search engines) */
 .topic-index {
-    padding-block: var(--space);
+    padding-block: 1.25rem;
     background: var(--paper);
     border-top: 1px solid var(--line);
+    font-size: var(--step--1);
 }
-.topic-index details { margin-top: 1.5rem; }
 .topic-index summary {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    min-height: 3rem;
-    padding: 0.6rem 1.2rem;
-    border: 2px solid var(--accent);
-    border-radius: var(--radius);
-    background: var(--paper);
-    color: var(--accent);
-    font-weight: 700;
+    gap: 0.5rem;
+    min-height: 2.75rem; /* comfortable tap target, though the text is small */
+    color: var(--muted);
     cursor: pointer;
     list-style: none;
 }
 .topic-index summary::-webkit-details-marker { display: none; }
 .topic-index summary::before {
     content: "";
-    width: 0.55rem;
-    height: 0.55rem;
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
     transform: rotate(-45deg);
     transition: transform 0.2s ease;
 }
 .topic-index details[open] summary::before { transform: rotate(45deg); }
-.topic-index summary:hover { background: var(--accent); color: var(--paper); }
+.topic-index summary:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 0.2em; }
 
 .topic-index__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    gap: 0 2rem;
-    margin: 2rem 0 0;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0.75rem 2rem;
+    margin: 0.5rem 0 1rem;
     padding: 0;
     list-style: none;
 }
-.topic-index details[open] .topic-index__list { animation: reply-in 0.3s ease both; }
-.topic-index__item { padding: 0.9rem 0; border-top: 1px solid var(--line); break-inside: avoid; }
-.topic-index__item h3 { font-size: 1.05rem; margin: 0 0 0.35rem; }
-.topic-index__places { display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; margin: 0; padding: 0; list-style: none; font-size: var(--step--1); }
+.topic-index__item h3 { font-family: var(--font-body); font-size: var(--step--1); letter-spacing: 0; margin: 0 0 0.1rem; color: var(--ink); }
+.topic-index__places { display: flex; flex-wrap: wrap; gap: 0.1rem 0.75rem; margin: 0; padding: 0; list-style: none; }
 
 /* ==========================================================================
    Inner pages
@@ -573,9 +646,11 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+    .quote:hover { transform: none; }
 }
 
 @media print {
     .site-header, .nav-toggle, .topic-index, .site-footer__legal, .hero__actions { display: none; }
     .hero, .page-head, .band { background: none; }
+    .split__image, .quote, .quote blockquote::before, .cta__inner { opacity: 1 !important; transform: none !important; animation: none !important; }
 }

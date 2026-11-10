@@ -11,9 +11,9 @@
     <section aria-labelledby="footer-offices">
       <h2 id="footer-offices">Our offices</h2>
       <address>
-        <p><strong>Cork</strong><br>{{ site.address.line1 }}, {{ site.address.line2 }}, {{ site.address.town }}, {{ site.address.county }} {{ site.address.postcode }}</p>
-        <p><strong>Dublin</strong><br>{{ site.addressDublin.line1 }}, {{ site.addressDublin.line2 }}, {{ site.addressDublin.town }}, {{ site.addressDublin.county }} {{ site.addressDublin.postcode }}</p>
-        <p><strong>Limerick</strong><br>{{ site.addressLimerick.line1 }}, {{ site.addressLimerick.line2 }}, {{ site.addressLimerick.county }} {{ site.addressLimerick.postcode }}</p>
+        <p><strong>Cork</strong><br>{{ site.address | formatAddress }}</p>
+        <p><strong>Dublin</strong><br>{{ site.addressDublin | formatAddress }}</p>
+        <p><strong>Limerick</strong><br>{{ site.addressLimerick | formatAddress }}</p>
       </address>
     </section>
 

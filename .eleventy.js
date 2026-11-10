@@ -118,6 +118,13 @@ module.exports = function(config) {
 
     config.addFilter("displayDate", displayDate);
 
+    // one office address from site.json on a single line, skipping any blank lines,
+    // e.g. "26 Upper Pembroke Street, Dublin 2 D02 X361"
+    config.addFilter("formatAddress", function(address) {
+        let place = [address.county, address.postcode].map(part => (part || "").trim()).filter(Boolean).join(" ");
+        return [address.line1, address.line2, address.town, place].map(part => (part || "").trim()).filter(Boolean).join(", ");
+    });
+
     // all office addresses as JSON, for structured data
     config.addShortcode("officeAddresses", () =>JSON.stringify(Object.keys(offices).map(postalAddress)));
     config.addFilter("courseText", courseText);

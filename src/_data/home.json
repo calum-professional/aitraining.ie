@@ -45,15 +45,27 @@
                         "text": "I got a great insight on how to approach AI and structure prompts to get the most helpful response.  The trainer was so practical and hands-on with examples.   The scope to use the tools to interact and optimise repetitive tasks gave me a realistic expectation of what AI can be used for.  Learning about Power Query and using AI to show how to pull data from PDF documents to Excel was great!",
                         "name": "AI in the Workplace course participant",
                         "jobtitle": "Retail Manager"
+                    },
+                    {
+                        "text": "The AI-Assisted Data Automation training was a Gold Standard.  Taking the skills from our group sessions and applying them to our day-to-day roles has saved hours in reporting time weekly.  Learning how to work with AI to create repeatable skills is freeing my team for more time on data analysis and generating real, practical insights and process improvements.",
+                        "name": "Pharmaceutical Sector",
+                        "jobtitle": "Finance Managers"
                     }
                 ]
             },
             "text": "Testimonials"
+        },
+        {
+            "id": "get-started",
+            "link": "no",
+            "type": "cta",
+            "title": "Find the right AI course for you",
+            "content": "From a one-day introduction to AI in the workplace to in-depth courses for developers, testers and IT teams. See what each course covers, then book a date in Dublin, Cork or live online.",
+            "actions": [
+                { "text": "Browse courses", "link": "/courses/" },
+                { "text": "See course dates", "link": "/schedule/" }
+            ],
+            "note": "Training a team? We can run any course at your premises or online, on dates that suit you. <a href=\"#contact\">Contact us</a>"
         }
-    ],
-    "topicIndexIllustration": {
-        "src": "/img/undraw-destination.svg",
-        "width": 1033,
-        "height": 836
-    }
+    ]
 }

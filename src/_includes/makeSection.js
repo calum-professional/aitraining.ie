@@ -60,7 +60,7 @@ module.exports = {
     slugify,
 
     // index of landing pages, grouped by keyword, e.g. "Python Training" -> Dublin, Cork, ...
-    asAccordion: function (data, image) {
+    asAccordion: function (data) {
 
         let topics = data.reduce((result, current) => {
             let keyword = slugify(current.keyword);
@@ -77,17 +77,12 @@ module.exports = {
                     </li>`;
         });
 
+        // kept low-key on purpose: it's mainly internal links for search engines
         return `<section id="savedsearches" class="topic-index" aria-labelledby="topic-index-heading">
                     <div class="wrap">
-                        <div class="split${image ? "" : " split--text-only"}">
-                            <div class="split__text">
-                                <h2 id="topic-index-heading">Find training by topic and location</h2>
-                                <p>Every topic we teach, with course pages for Dublin, Cork, Limerick and the rest of Ireland.</p>
-                            </div>
-                            ${illustration(image, "split__image")}
-                        </div>
+                        <h2 id="topic-index-heading" class="visually-hidden">Training by topic and location</h2>
                         <details>
-                            <summary>Show all ${items.length} topics</summary>
+                            <summary>All topics and locations (${items.length})</summary>
                             <ul class="topic-index__list">${items.join("")}</ul>
                         </details>
                     </div>
@@ -137,6 +132,12 @@ module.exports = {
                 let actionLinks = actions.map((action, index) =>
                     `<a class="button${index > 0 ? ' button--quiet' : ''}" href="${action.link}">${action.text}</a>`).join("");
 
+                // each word of the headline in its own span so they can rise in one after another
+                // (a title containing HTML is left whole)
+                let title = String(section.title || "");
+                let titleWords = title.includes("<") ? [title] : title.trim().split(/\s+/);
+                let titleHtml = titleWords.map((word, i) => `<span class="hero__word" style="--w:${i}">${word}</span>`).join(" ");
+
                 let media = "";
                 if (section.illustration) {
                     media = illustration(section.illustration, "hero__image", false);
@@ -146,8 +147,8 @@ module.exports = {
 
                 html = `<section class="hero" id="${section.id || 'banner'}">
                             <div class="wrap hero__inner">
-                                <div class="hero__copy">
-                                    <h1 class="hero__title">${ section.title }</h1>
+                                <div class="hero__copy" style="--words:${titleWords.length}">
+                                    <h1 class="hero__title">${ titleHtml }</h1>
                                     <p class="hero__lead">${ section.subtitle }</p>
                                     <p class="hero__actions">${actionLinks}</p>
                                 </div>
@@ -206,6 +207,32 @@ module.exports = {
                             <div class="wrap">
                                 <h2 class="topic__title">${ section.title || section.text }</h2>
                                 <div class="quotes">${quotes}</div>
+                            </div>
+                        </section>`;
+                break;
+            }
+
+            // closing call to action near the end of the page
+            case 'cta': {
+                let id = section.id || "get-started";
+                let paragraphs = Array.isArray(section.content) ? section.content : [section.content].filter(Boolean);
+                let actions = section.actions || [
+                    { text: "Browse courses", link: "/courses/" },
+                    { text: "See course dates", link: "/schedule/" }
+                ];
+                let actionLinks = actions.map((action, index) =>
+                    `<a class="button${index > 0 ? ' button--quiet' : ''}" href="${action.link}">${action.text}</a>`).join("");
+
+                html = `<section id="${id}" class="cta" aria-labelledby="${id}-heading">
+                            <div class="wrap">
+                                <div class="cta__inner">
+                                    <div class="cta__text">
+                                        <h2 id="${id}-heading">${section.title}</h2>
+                                        ${paragraphs.map(text => `<p>${text}</p>`).join("")}
+                                    </div>
+                                    <p class="cta__actions">${actionLinks}</p>
+                                    ${section.note ? `<p class="cta__note">${section.note}</p>` : ""}
+                                </div>
                             </div>
                         </section>`;
                 break;
