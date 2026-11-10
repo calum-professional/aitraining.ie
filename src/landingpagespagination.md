@@ -5,7 +5,6 @@ pagination:
     size: 1
     alias: search
 permalink: "saved_searches/{{search.location | slugify | removeInvalidChars }}/{{search.keyword | slugify | removeInvalidChars}}/{{search.title | slugify | removeInvalidChars}}.html"
-page:
-    type: landing
+pageType: landing
 --- 
 {{ keyword | json }}

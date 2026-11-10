@@ -1,9 +1,12 @@
 ---
 layout: base_layout
 ---
+{% set topic = search.keyword | replace(" Training", "") %}
 <header class="page-head">
   <div class="wrap">
+    <p class="breadcrumb"><a href="/courses/">Courses</a></p>
     <h1>{{ search.title }}</h1>
+    <p class="page-head__lead">Instructor-led {{ topic }} courses {% if search.location == "Ireland" %}across Ireland and live online{% else %}in {{ search.location }} and live online{% endif %}. Choose a course to see what it covers and when it runs.</p>
   </div>
 </header>
 
@@ -16,12 +19,14 @@ layout: base_layout
   </div>
   {% endif %}
 
-  <h2>Courses</h2>
+  <h2>{{ topic }} courses in {{ search.location }}</h2>
   <ul class="course-list">
   {% for course in search.courses %}
     <li>
       <h3><a href="/courses/{{ course.name | slug | removeInvalidChars }}/">{{ course.name }}</a></h3>
       <p>{{ course.descrip | truncate(220) }}</p>
+      {% set next = course.schedule | nextDate %}
+      <p class="course-list__meta">{{ course.durationDays }} {% if course.durationDays == 1 %}day{% else %}days{% endif %}{% if next %}, next date {{ next | displayDate }}{% endif %}</p>
     </li>
   {% endfor %}
   </ul>

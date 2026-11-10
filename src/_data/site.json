@@ -7,7 +7,7 @@
         "department": "AI"
     },
     "url": "aitrainingcourses.ie",
-    "logo": "/img/adobelogos.png",
+    "logo": "https://www.professional.ie/img/ProfessionalTrainingOffice.jpg",
     "address": {
         "line1": "Building 6500E", 
         "line2": "Cork Airport Business Park", 
@@ -17,12 +17,12 @@
         "postcode": "T12 TP8H"
     },
     "addressDublin": {
-        "line1": "Unit 22/23", 
-        "line2": "Westland", 
-        "town": "Pearse Street", 
+        "line1": "26 Upper Pembroke Street", 
+        "line2": "", 
+        "town": "", 
         "county": "Dublin 2", 
         "country": "Ireland", 
-        "postcode": "D02 W102"
+        "postcode": "D02 X361"
     },
     "addressLimerick": {
         "line1": "Limerick Business Complex",

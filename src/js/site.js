@@ -1,8 +1,6 @@
 // Small progressive enhancements. Every page works without this file.
 
 (function () {
-    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     // Mobile menu
     var toggle = document.querySelector(".nav-toggle");
     var menu = document.getElementById("site-menu");
@@ -36,32 +34,4 @@
             link.replaceWith(done);
         }
     });
-
-    // Hero: type the example request, then reveal the answer
-    var prompt = document.querySelector("[data-prompt]");
-    if (prompt) {
-        var textEl = prompt.querySelector(".prompt__text");
-        var fullText = textEl ? textEl.textContent : "";
-        var answer = function () { prompt.classList.add("is-answered"); };
-
-        if (reduceMotion || !textEl) {
-            answer();
-        } else {
-            textEl.textContent = "";
-            prompt.classList.add("is-typing");
-            var i = 0;
-            setTimeout(function type() {
-                i += 1;
-                textEl.textContent = fullText.slice(0, i);
-                if (i < fullText.length) {
-                    setTimeout(type, 28 + Math.random() * 40);
-                } else {
-                    setTimeout(function () {
-                        prompt.classList.remove("is-typing");
-                        answer();
-                    }, 450);
-                }
-            }, 700);
-        }
-    }
 })();

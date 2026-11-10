@@ -282,83 +282,6 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
     to { opacity: 1; transform: none; }
 }
 
-.hero__illustration { max-width: 22rem; margin-top: clamp(2rem, 4vw, 3.5rem); }
-
-/* The example request: the one moving element on the page */
-.prompt { margin: 0; }
-.prompt__window {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-l);
-    padding: clamp(1.25rem, 3vw, 2rem);
-    box-shadow: 0 1px 0 var(--line), 0 24px 48px -32px rgba(14, 107, 87, 0.45);
-}
-.prompt__label {
-    margin: 0 0 0.35rem;
-    font-size: var(--step--1);
-    font-weight: 700;
-    color: var(--muted);
-}
-.prompt__ask {
-    min-height: 4.8em;
-    margin: 0 0 1.5rem;
-    padding: 0.9rem 1.1rem;
-    border-radius: var(--radius);
-    background: var(--surface);
-    font-size: var(--step-1);
-    line-height: 1.4;
-}
-.prompt.is-typing .prompt__text::after {
-    content: "";
-    display: inline-block;
-    width: 0.55em;
-    height: 1.1em;
-    margin-left: 2px;
-    vertical-align: -0.15em;
-    background: var(--highlight);
-    animation: caret 0.9s steps(1) infinite;
-}
-.prompt__reply {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    counter-reset: point;
-}
-.prompt__reply li {
-    display: flex;
-    gap: 0.75rem;
-    padding: 0.55rem 0;
-    border-top: 1px solid var(--line);
-    counter-increment: point;
-}
-.prompt__reply li::before {
-    content: counter(point);
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 1.6rem;
-    height: 1.6rem;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--paper);
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-.prompt figcaption {
-    margin-top: 1rem;
-    max-width: 48ch;
-    font-size: var(--step--1);
-    color: var(--muted);
-}
-
-/* Before the answer arrives the reply lines wait, then appear one after another */
-.js .prompt:not(.is-answered) .prompt__reply li { opacity: 0; }
-.js .prompt.is-answered .prompt__reply li {
-    animation: reply-in 0.45s ease both;
-    animation-delay: calc(var(--i, 0) * 160ms);
-}
-
-@keyframes caret { 50% { opacity: 0; } }
 @keyframes reply-in {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: none; }
@@ -633,7 +556,6 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
     .topic__head { position: static; }
     .split { grid-template-columns: 1fr; gap: 1.5rem; }
     .split__image { max-width: 16rem; justify-self: start; order: -1; }
-    .hero__illustration { max-width: 16rem; margin-top: 2rem; }
     .hero__image { max-width: 18rem; margin-inline: 0; }
     .site-footer__grid { grid-template-columns: 1fr 1fr; }
     .site-footer__about { grid-column: 1 / -1; }

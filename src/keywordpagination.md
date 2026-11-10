@@ -5,9 +5,7 @@ pagination:
     size: 1
     alias: keyword
 permalink: "training_courses/{{ keyword | replace: '#', ' sharp' | replace: '+', ' plus' | slug | removeInvalidChars }}/"
-page:
-    type: keyword
-    title: Training Courses
+pageType: keyword
 ---
 <header class="page-head">
 <div class="wrap">

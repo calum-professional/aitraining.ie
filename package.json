@@ -6,9 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "eleventy",
-    "start:dev": "eleventy --watch --serve", 
+    "start:dev": "eleventy --watch --serve",
     "start:quiet": "eleventy --watch --serve --quiet"
-
   },
   "repository": {
     "type": "git",
@@ -22,9 +21,10 @@
   },
   "homepage": "https://github.com/protrainerireland/MasterMicroSite#readme",
   "devDependencies": {
-    "@11ty/eleventy": "^0.12.1"
+    "@11ty/eleventy": "^3.1.8"
   },
   "dependencies": {
-    "@11ty/eleventy-cache-assets": "^2.3.0"
+    "@11ty/eleventy-fetch": "^5.1.3",
+    "slugify": "1.5.3"
   }
 }

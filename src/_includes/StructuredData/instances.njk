@@ -1,13 +1,12 @@
-<!-- EducationalEvents -->
-<script type="application/ld+json">
-[
-    {% for courseItem in coursesapifull.courses %}
-        {% if course.id == null or courseItem.id == course.id and courseItem.schedule.length > 0 %}
-            {% for courseInstance in courseItem.schedule %}
-                {{ courseInstance | formatScheduleInstance("metadata",courseItem) | safe }}
-                {%if loop.index < courseItem.schedule.length %},{% endif %}
-            {% endfor %}
-        {% endif %}
+  <!-- EducationalEvents: every date for this course, or for all courses on the schedule page -->
+{% set events = [] %}
+{% for courseItem in coursesapifull.courses %}
+  {% if course.id == null or courseItem.id == course.id %}
+    {% for courseInstance in courseItem.schedule %}
+      {% if events.push(courseInstance | formatScheduleInstance("metadata", courseItem)) %}{% endif %}
     {% endfor %}
-]
-</script>  
+  {% endif %}
+{% endfor %}
+<script type="application/ld+json">
+[{{ events | join(",") | safe }}]
+</script>

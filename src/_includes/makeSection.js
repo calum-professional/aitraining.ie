@@ -137,20 +137,8 @@ module.exports = {
                 let actionLinks = actions.map((action, index) =>
                     `<a class="button${index > 0 ? ' button--quiet' : ''}" href="${action.link}">${action.text}</a>`).join("");
 
-                // the hero illustration: an AI request being typed, then answered (see js/site.js)
                 let media = "";
-                if (section.prompt) {
-                    let reply = toItems(section.prompt.reply).map((line, i) => `<li style="--i:${i}">${line}</li>`).join("");
-                    media = `<figure class="prompt" data-prompt>
-                                <div class="prompt__window" aria-hidden="true">
-                                    <p class="prompt__label">You</p>
-                                    <p class="prompt__ask"><span class="prompt__text">${section.prompt.text}</span></p>
-                                    <p class="prompt__label">Assistant</p>
-                                    <ul class="prompt__reply">${reply}</ul>
-                                </div>
-                                <figcaption>${section.prompt.caption || ""}</figcaption>
-                            </figure>`;
-                } else if (section.illustration) {
+                if (section.illustration) {
                     media = illustration(section.illustration, "hero__image", false);
                 } else if (section.image) {
                     media = `<img class="hero__image" src="${section.image}" alt="${escapeAttr(section.imageAlt || "")}">`;
@@ -162,7 +150,6 @@ module.exports = {
                                     <h1 class="hero__title">${ section.title }</h1>
                                     <p class="hero__lead">${ section.subtitle }</p>
                                     <p class="hero__actions">${actionLinks}</p>
-                                    ${section.prompt ? illustration(section.illustration, "hero__illustration", false) : ""}
                                 </div>
                                 <div class="hero__media">${media}</div>
                             </div>

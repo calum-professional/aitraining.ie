@@ -5,7 +5,6 @@ pagination:
     size: 1
     alias: course
 permalink: "courses/{{ course.name | slug | removeInvalidChars}}/"
-page:
-    type: course
+pageType: course
 ---
 {{ courseapi | json }}

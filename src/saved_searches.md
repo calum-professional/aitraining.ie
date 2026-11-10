@@ -1,11 +1,10 @@
 ---
 layout: general_layout
+permalink: false
 title: Saved Searches
 tags: 
-page:
-    title: Search For Angular Training, Dublin, Cork, Limerick, Ireland
-    type: other
+pageType: other
 ---
 # Saved Searches
 
-{{ coursesapifull.savedSearches | safe }}
+{{ coursesapifull.savedSearches }}

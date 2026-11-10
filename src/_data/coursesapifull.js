@@ -1,6 +1,5 @@
-const fetch = require("node-fetch");
 
-const Cache = require("@11ty/eleventy-cache-assets");
+const Cache = require("@11ty/eleventy-fetch");
 const fs = require('fs');
 
 
@@ -85,7 +84,7 @@ module.exports = async function() {
     return {
       keyword: keyword.keyword, 
       paragraphs: keyword.paragraphs, 
-      courses: distinctCourseList.filter(course=>course.searchWords.includes(keyword.keyword)), 
+      courses: distinctCourseListWithSchedule.filter(course=>course.searchWords.includes(keyword.keyword)), 
     }
   });
 

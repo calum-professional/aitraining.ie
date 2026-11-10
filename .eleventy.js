@@ -1,6 +1,7 @@
 let branding = require('./src/_data/branding.json');
 let site = require('./src/_data/site.json');
 let fs = require('fs');
+let slugifyPackage = require('slugify'); // pinned to 1.5.3, see the "slug" filter
 let { makeSection, slugify, asAccordion, keywordInfo } = require('./src/_includes/makeSection');
 
 // this function makes a string safe for json
@@ -45,40 +46,42 @@ function getInstanceDateInfo(strDate, duration) {
     }
 }
 
+// the offices, with their addresses from site.json
+const offices = {
+    Cork: { address: site.address, phone: site.phone },
+    Dublin: { address: site.addressDublin, phone: site.phoneDublin },
+    Limerick: { address: site.addressLimerick, phone: site.phoneLimerick }
+};
+
+// schema.org PostalAddress for one of the offices above
+function postalAddress(city) {
+    let address = offices[city].address;
+    return {
+        "@type": "PostalAddress",
+        streetAddress: [address.line1, address.line2, address.town].filter(Boolean).join(", "),
+        addressLocality: city,
+        addressRegion: address.county,
+        postalCode: address.postcode,
+        addressCountry: "IE"
+    };
+}
+
 function getLocationInfo(instance, course) {
 
-    let location = {
-        
-    };
+    let location = {};
 
     let filename = slugify(course.name);
 
     if (instance.location == 'Online') {
         location["@type"] = "VirtualLocation";
         location.url = `https://professional.ie/course_schedule/${filename}.html?id=${instance.id}`;
-        
     } else {
-
-        
+        // classes outside our offices fall back to Cork, as before
+        let city = offices[instance.location] ? instance.location : "Cork";
         location["@type"] = 'Place';
         location.sameAs = "https://professional.ie";
-        location.name = `Professional Training ${instance.location}`;
-
-        if (instance.location == "Dublin") {
-            location.address = {
-                "@type" : "PostalAddress",
-                "streetAddress" : "Unit 22, Westland Square, Pearse Street",
-                "addressRegion" : "Dublin 2",
-                "postalCode" : "D02 W102"
-            }
-        } else {
-            location.address = {
-                "@type": "PostalAddress", 
-                "streetAddress" : "Unit E, Building 6500, Cork Airport Business Park", 
-                "addressRegion" : "Cork", 
-                "postalCode": "T12 TP8H"
-            }
-        }
+        location.name = `Professional Training ${city}`;
+        location.address = postalAddress(city);
     }
     return {location};
 }
@@ -109,7 +112,14 @@ module.exports = function(config) {
 
     config.addFilter("slugify", slugify);
 
+    // Eleventy 0.12's slug filter, kept so page URLs don't change: newer slugify
+    // versions turn "Situations – Call" into "situations-call" instead of "situations---call"
+    config.addFilter("slug", str => slugifyPackage(str, { replacement: "-", lower: true }));
+
     config.addFilter("displayDate", displayDate);
+
+    // all office addresses as JSON, for structured data
+    config.addShortcode("officeAddresses", () =>JSON.stringify(Object.keys(offices).map(postalAddress)));
     config.addFilter("courseText", courseText);
 
     // first scheduled date that hasn't passed yet ("" if none), as of the build
@@ -160,10 +170,10 @@ module.exports = function(config) {
                 break;
             case "metadata":
                 let metadata = {
-                    "@context":"http://schema.org", 
+                    "@context":"https://schema.org",
                     "@type": "EducationEvent", 
                     name: `${ courseItem.name }`, 
-                    image: `${site.url}${site.logo}`, 
+                    image: site.logo, 
                     description: `${makeSafeForJson(courseItem.descrip)}`, 
                     ...getInstanceDateInfo(instance.date, courseItem.durationDays), 
                     eventStatus: "https://schema.org/EventScheduled", 
@@ -180,7 +190,7 @@ module.exports = function(config) {
                     "organizer": {
                         "@type": "Organization", 
                         "name": "Professional Training", 
-                        "url": "www.professional.ie"
+                        "url": "https://www.professional.ie/"
                     }
                     
                 }
@@ -208,12 +218,12 @@ module.exports = function(config) {
         return text.replace(/\r?\n/g, "<br>");
     })
 
+    // template formats are set above with setTemplateFormats
     return {
-        templateFormats: ["html", "njk", "svg"], 
         dir: {
-            input: './src', 
-            output: './build', 
-            layouts: '/_includes/layout'
+            input: 'src',
+            output: 'build',
+            layouts: '_includes/layout'
         }
     };
 };

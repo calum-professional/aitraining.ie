@@ -1,34 +1,20 @@
-<script type="application/ld+json">
+  <script type="application/ld+json">
 {
-    "@context" : "http://schema.org",
+    "@context" : "https://schema.org",
     "@type" : "EducationalOrganization",
     "name" : "{{ site.organisation.name }}",
-    "url": "https://www.professional.ie/", 
-    "sameAs": "https://www.professionals.ie/", 
-    "logo": "https://www.professional.ie/img/favicon.bmp", 
-    "image": "https://www.professional.ie/img/ProfessionalTrainingOffice.jpg", 
-    "description": "Professional Training, with offices in Dublin and Cork, Ireland is a provider of top quality business training courses, IT training courses and programming training courses.", 
-    "telephone" : [ "+353 1 6627700", "+353 21 4319010" ],
-    "email" : "info@professional.ie",
-    "address" : [{
-        "@type" : "PostalAddress",
-        "streetAddress" : "Unit 22, Westland Square, Pearse Street",
-        "addressRegion" : "Dublin 2",
-        "postalCode" : "D02 W102"
-    },
-    {
-        "@type": "PostalAddress", 
-        "streetAddress" : "Unit E, Building 6500, Cork Airport Business Park", 
-        "addressRegion" : "Cork", 
-        "postalCode": "T12 TP8H"
-    }],
-  "alumni": [
-  ],
-  "department": {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "{{ site.organisation.department}}",
-    "url": "{{ site.url }}"
-  }
+    "url": "https://www.professional.ie/",
+    "sameAs": "{{ site.social.linkedin }}",
+    "logo": "https://www.professional.ie/img/favicon.bmp",
+    "image": "{{ site.logo }}",
+    "description": "Professional Training, with offices in Dublin, Cork and Limerick, Ireland, is a provider of top quality business training courses, IT training courses and programming training courses.",
+    "telephone" : [ "{{ site.phoneDublin }}", "{{ site.phone }}", "{{ site.phoneLimerick }}" ],
+    "email" : "{{ site.email }}",
+    "address" : {% officeAddresses %},
+    "department": {
+        "@type": "EducationalOrganization",
+        "name": "{{ site.organisation.department }}",
+        "url": "https://{{ site.url }}/"
+    }
 }
 </script>

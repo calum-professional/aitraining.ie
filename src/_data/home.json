@@ -11,7 +11,7 @@
             "link": "no",
             "type": "banner",
             "title": "AI Training Courses Ireland",
-            "subtitle": "Practical, instructor-led AI courses in Dublin, Cork, Limerick and live online. Learn to use AI tools confidently, safely and well.",
+            "subtitle": "Practical, instructor-led AI training at our Dublin and Cork offices, at your premises nationwide, and live online. Help your team save time, streamline workflows and apply AI to everyday business challenges.",
             "illustration": {
                 "src": "/img/undraw-chat-with-ai.svg",
                 "width": 801,
@@ -25,7 +25,7 @@
             "title": "About our AI courses",
             "type": "text",
             "content": [
-                "Generative AI tools such as ChatGPT and Microsoft Copilot can draft documents, summarise reports and meetings, analyse data and answer questions in plain language. Used well, they save time on everyday tasks and help teams produce better work in almost every role.",
+                "Generative AI tools such as Claude, ChatGPT and Microsoft Copilot can draft documents, summarise reports and meetings, analyse data and answer questions in plain language. Used well, they save time on everyday tasks and help teams produce better work in almost every role.",
                 "Our instructor-led <a href=/courses/>courses</a> give you the practical skills to use these tools confidently and responsibly. You will learn how to write clear requests, check AI output for accuracy, protect sensitive information and build AI into your daily work. For managers, we also cover where AI adds real value, how to assess the risks and how to plan a successful rollout. No technical background is needed."
             ],
             "illustration": {
@@ -42,9 +42,9 @@
             "content": {
                 "quotes": [
                     {
-                        "text": "Placeholder testimonial. Replace this with a short quote from a real course attendee about what they learned and how it helped them.",
-                        "name": "Attendee name",
-                        "jobtitle": "Job title, Organisation"
+                        "text": "I got a great insight on how to approach AI and structure prompts to get the most helpful response.  The trainer was so practical and hands-on with examples.   The scope to use the tools to interact and optimise repetitive tasks gave me a realistic expectation of what AI can be used for.  Learning about Power Query and using AI to show how to pull data from PDF documents to Excel was great!",
+                        "name": "AI in the Workplace course participant",
+                        "jobtitle": "Retail Manager"
                     }
                 ]
             },

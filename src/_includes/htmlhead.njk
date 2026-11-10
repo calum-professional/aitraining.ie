@@ -5,23 +5,23 @@
     <script>document.documentElement.classList.add("js");</script>
 
     {% set keywordList = site.searchKeywords.join(" ") %}
-    {% if page.type == "home" and page.url == "/" %}
+    {% if pageType == "home" and page.url == "/" %}
       {% set pageTitle = keywordList + " " + site.homepageTitle %}
       {% set pageDescription = keywordList + " training courses in Dublin, Cork, Limerick and live online. Practical, instructor-led courses from " + site.organisation.name + "." %}
-    {% elif page.type == "landing" %}
+    {% elif pageType == "landing" %}
       {% set pageTitle = search.title %}
       {% set pageDescription = search.title + ". Instructor-led courses from " + site.organisation.name + ". View courses and upcoming dates." %}
-    {% elif page.type == "course" %}
+    {% elif pageType == "course" %}
       {% set pageTitle = course.name + " Training" %}
       {% set pageDescription = course.descrip | striptags | truncate(155) %}
-    {% elif page.type == "keyword" %}
+    {% elif pageType == "keyword" %}
       {% set pageTitle = keyword + " Training Courses, Dublin, Cork, Limerick, Ireland" %}
       {% set pageDescription = keyword + " training courses in Dublin, Cork, Limerick and live online. Compare courses and book a date with " + site.organisation.name + "." %}
-    {% elif page.type == "schedule" %}
+    {% elif pageType == "schedule" %}
       {% set pageTitle = "Scheduled " + keywordList + " " + site.homepageTitle %}
       {% set pageDescription = "Upcoming " + keywordList + " course dates in Dublin, Cork, Limerick and live online. Choose a date and book your place." %}
     {% else %}
-      {% set pageTitle = metaTitle or page.title or title or (keywordList + " " + site.homepageTitle) %}
+      {% set pageTitle = metaTitle or title or (keywordList + " " + site.homepageTitle) %}
       {% set pageDescription = description or (keywordList + " training courses in Dublin, Cork, Limerick and live online from " + site.organisation.name + ".") %}
     {% endif %}
 

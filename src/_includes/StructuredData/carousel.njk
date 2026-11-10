@@ -9,19 +9,17 @@
                 "position": {{ loop.index }}, 
                 "item": {
                     "@type": "Course", 
-                    "url": "{{ site.url }}/courses/{{ course.name | slug }}/", 
-                    "name": "{{ course.name }}", 
-                    "description":"{{ course.descrip | jsonsafe }}", 
+                    "url": "https://{{ site.url }}/courses/{{ course.name | slug | removeInvalidChars }}/", 
+                    "name": {{ course.name | dump | safe }}, 
+                    "description": {{ course.descrip | dump | safe }}, 
                     "provider":{
-                        "@context":"http://schema.org", 
                         "@type": "EducationalOrganization", 
                         "name": "Professional Training", 
                         "sameAs": "https://www.professional.ie", 
                         "department":{
-                            "@context": "https://schema.org",
                             "@type": "EducationalOrganization", 
                             "name": "{{ site.organisation.department }}",
-                            "url": "{{ site.url }}"
+                            "url": "https://{{ site.url }}/"
                         }
                     }
                 }

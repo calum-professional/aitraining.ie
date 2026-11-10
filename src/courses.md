@@ -4,8 +4,7 @@ title: Courses
 metaTitle: All AI Training Courses | Dublin Cork Limerick Ireland
 description: Every AI training course we run, with outlines and dates. Instructor-led courses in Dublin, Cork, Limerick and live online.
 tags: [main]
-page:
-    type: courses
+pageType: courses
 ---
 <header class="page-head">
 <div class="wrap">
