@@ -2,17 +2,17 @@
    Tokens. Brand colours come from _data/branding.json via branding.njk.
    ========================================================================== */
 :root {
-    --ink: var(--foreground_color, #1E2A28);
-    --muted: var(--secondary_foreground_color, #4F5D5A);
-    --accent: var(--primary_color, #0E6B57);
-    --accent-strong: var(--primary_strong_color, #0A5243);
-    --surface: var(--secondary_color, #EEF3F1);
-    --highlight: var(--highlight_color, #F5C84B);
-    --accent-soft: var(--accent_soft_color, #DCEFE7);   /* light green fill */
-    --accent-deep: var(--accent_deep_color, #0B3F34);   /* deep green: footer */
-    --warm-soft: var(--warm_soft_color, #FCF1CF);       /* soft yellow: small warm touches */
+    --ink: var(--foreground_color, #1C1A33);
+    --muted: var(--secondary_foreground_color, #55536E);
+    --accent: var(--primary_color, #4338CA);
+    --accent-strong: var(--primary_strong_color, #3730A3);
+    --surface: var(--secondary_color, #F3F2FB);
+    --highlight: var(--highlight_color, #FF8F6B);
+    --accent-soft: var(--accent_soft_color, #E4E2FA);   /* light indigo fill */
+    --accent-deep: var(--accent_deep_color, #1E1B4B);   /* deep indigo: footer */
+    --warm-soft: var(--warm_soft_color, #FFE6DC);       /* soft peach: small warm touches */
     --paper: #FFFFFF;
-    --line: #D3DDD9;
+    --line: #DCDAEC;
 
     --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
     --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
@@ -233,7 +233,7 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
         right: 0;
         background: var(--paper);
         border-bottom: 1px solid var(--line);
-        box-shadow: 0 12px 24px -16px rgba(30, 42, 40, 0.35);
+        box-shadow: 0 12px 24px -16px rgba(28, 26, 51, 0.35);
     }
     .js .site-nav.is-open { display: block; }
     .js .site-nav ul {
@@ -354,7 +354,7 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius-l);
-    box-shadow: 0 1px 0 var(--line), 0 20px 40px -30px rgba(14, 107, 87, 0.5);
+    box-shadow: 0 1px 0 var(--line), 0 20px 40px -30px rgba(67, 56, 202, 0.5);
 }
 .quote { transition: transform 0.25s ease, box-shadow 0.25s ease; }
 .quote:hover { transform: translateY(-4px); }
@@ -586,7 +586,7 @@ a:hover { color: var(--accent-strong); text-decoration-thickness: 2px; }
 .site-footer {
     flex-shrink: 0;
     background: var(--accent-deep);
-    color: #DCE6E2;
+    color: #E0DEF2;
     font-size: 0.97rem;
 }
 .site-footer a { color: var(--paper); }
