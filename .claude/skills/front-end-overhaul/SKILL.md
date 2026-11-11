@@ -244,11 +244,27 @@ Schedule and Courses. All the copy lives in `home.json` so the user can edit it.
 - **Course page:**
   - A facts row: duration, format, and next date. The next date must be the first
     *future* date (`nextDate` filter), not just the first one in the list.
+  - **Next date jumps to the booking dates (must keep).** The next date in the
+    facts row is a link, `<a href="#dates">Wed 2 Dec 2026</a>`, to the "Course
+    dates" section (`<section class="band" id="dates">`) further down the page, so a
+    visitor who sees a date they want can click it and land on the table with the
+    Book buttons. To make this work:
+    - Only render the "Next date" fact when `nextDate` returns a date; leave it
+      out entirely when there are no future dates.
+    - Use a plain anchor, not JavaScript, so it works without scripts.
+    - In `style.css`, set `scroll-behavior: smooth` and `scroll-padding-top`
+      (about `5.5rem`, the sticky header's height) on `html`, so the page glides
+      down and the "Course dates" heading isn't hidden under the header. Switch
+      back to `scroll-behavior: auto` under `prefers-reduced-motion: reduce`.
+    - Check it on a built course page: click the date and confirm the dates table
+      and its Book links are in view.
   - "What the course covers": each outline block in a responsive grid. The API's
     newline-separated text becomes a `<ul>` (`courseText` filter).
-  - "Course dates" table: Date, Location and Book only, not the course name. Dates
-    are formatted like "Mon 12 Oct 2026" (`displayDate` filter). Each Book link has
-    visually-hidden text naming the course, date and location.
+  - "Course dates" table (the `#dates` target): Date, Location and Book only, not
+    the course name. Dates are formatted like "Mon 12 Oct 2026" (`displayDate`
+    filter). Each Book link goes to
+    `https://www.professional.ie/course_schedule/<course file>.html?id=<instance id>`
+    and has visually-hidden text naming the course, date and location.
   - "Related topics" as light-green pill links.
   - If there are no dates, show a message pointing to "Contact us".
 - **Courses list and keyword pages:** a list of courses showing name, a short
@@ -319,6 +335,8 @@ The template's JSON-LD is partly broken. Fix it as follows:
    `msedge --headless=new --hide-scrollbars --window-size=1400,3400 --virtual-time-budget=5000 --screenshot=<file> http://localhost:8080/`.
    - Check the home page (including the call to action and footer), a course page,
      a landing page and the schedule at desktop width.
+   - Capture a course page with `#dates` on the end of the URL and confirm it opens
+     at the "Course dates" heading, not hidden under the header.
    - A very short `--virtual-time-budget` (about 350ms) shows the banner animation
      mid-way.
    - Headless browsers won't lay out narrower than about 496px, so a 400px capture
