@@ -283,8 +283,9 @@ Schedule and Courses. All the copy lives in `home.json` so the user can edit it.
   a dates table.
 - On phones, tables become stacked rows with the Book button on the right.
 - **Footer addresses** use a `formatAddress` filter, which joins `line1`, `line2`,
-  `town` and "county postcode" and skips blank parts. Printing each line with a
-  comma leaves ", , ," when a line is empty.
+  `town`, `county` and `postcode` with commas, including between county and
+  Eircode (e.g. "Kinsale Road, Cork, T12 TP8H"), and skips blank parts. Printing
+  each line with a comma leaves ", , ," when a line is empty.
 
 ## 8. Structured data (JSON-LD)
 

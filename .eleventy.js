@@ -150,8 +150,7 @@ module.exports = function(config) {
     // one office address from site.json on a single line, skipping any blank lines,
     // e.g. "26 Upper Pembroke Street, Dublin 2 D02 X361"
     config.addFilter("formatAddress", function(address) {
-        let place = [address.county, address.postcode].map(part => (part || "").trim()).filter(Boolean).join(" ");
-        return [address.line1, address.line2, address.town, place].map(part => (part || "").trim()).filter(Boolean).join(", ");
+        return [address.line1, address.line2, address.town, address.county, address.postcode].map(part => (part || "").trim()).filter(Boolean).join(", ");
     });
 
     // all office addresses as JSON, for structured data
