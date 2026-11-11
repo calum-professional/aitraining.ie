@@ -13,7 +13,7 @@
             "title": "AI Training Courses Ireland",
             "subtitle": "Practical, instructor-led AI training at our Dublin and Cork offices, at your premises nationwide, and live online. Help your team save time, streamline workflows and apply AI to everyday business challenges.",
             "illustration": {
-                "src": "/img/undraw-chat-with-ai.svg",
+                "src": "/img/undraw-chat-with-ai.svg?v=2",
                 "width": 801,
                 "height": 567
             }
@@ -29,7 +29,7 @@
                 "Our instructor-led <a href=/courses/>courses</a> give you the practical skills to use these tools confidently and responsibly. You will learn how to write clear requests, check AI output for accuracy, protect sensitive information and build AI into your daily work. For managers, we also cover where AI adds real value, how to assess the risks and how to plan a successful rollout. No technical background is needed."
             ],
             "illustration": {
-                "src": "/img/undraw-teacher.svg",
+                "src": "/img/undraw-teacher.svg?v=2",
                 "width": 960,
                 "height": 621
             }
