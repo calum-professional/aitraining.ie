@@ -24,10 +24,17 @@ module.exports = async function() {
   distinctCourseList = json.flatMap(keyword => keyword.courses)
                            .filter((course, index, courses) => courses.findIndex(c=>c.id==course.id) == index);
 
-  let distinctMicrositeKeywordList = json.flatMap(keyword=> keyword.microsite_keywords)
-                          .filter((mskeyword, index, list) => list.indexOf(mskeyword) == index)
-                          .filter((mskeyword)=>mskeyword != "");
-
+                           let distinctMicrositeKeywordList = json.flatMap(keyword=> keyword.microsite_keywords)
+                           .map(mskeyword => {
+                                 // remove # : + from keywords
+                             let kw = mskeyword.replace(/\+/ig, "plus");
+                             kw = kw.replace("#", "sharp");
+                             kw = kw.replace(":", "-");
+                             return kw;
+                           })
+                           .filter((mskeyword, index, list) => list.indexOf(mskeyword) == index)
+                           .filter((mskeyword)=>mskeyword != "");
+ 
   distinctMicrositeKeywordList = distinctMicrositeKeywordList.reduce((result, item) => {
       // do a case-insensitive compare to 
       // see if item is alreay in the result array
