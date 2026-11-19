@@ -286,6 +286,10 @@ Schedule and Courses. All the copy lives in `home.json` so the user can edit it.
   `town`, `county` and `postcode` with commas, including between county and
   Eircode (e.g. "Kinsale Road, Cork, T12 TP8H"), and skips blank parts. Printing
   each line with a comma leaves ", , ," when a line is empty.
+  The county and Eircode are joined with non-breaking spaces (`\u00A0`) so the
+  postcode always stays on the same line as the county: the Dublin address wraps
+  as "26 Upper Pembroke Street," / "Dublin 2, D02 X361", never with "D02 X361"
+  (or half of it) on a line of its own.
 
 ## 8. Structured data (JSON-LD)
 

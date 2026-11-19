@@ -147,10 +147,13 @@ module.exports = function(config) {
 
     config.addFilter("displayDate", displayDate);
 
-    // one office address from site.json on a single line, skipping any blank lines,
-    // e.g. "26 Upper Pembroke Street, Dublin 2 D02 X361"
+    // one office address from site.json, skipping any blank parts, e.g. "26 Upper Pembroke Street, Dublin 2, D02 X361"
     config.addFilter("formatAddress", function(address) {
-        return [address.line1, address.line2, address.town, address.county, address.postcode].map(part => (part || "").trim()).filter(Boolean).join(", ");
+        let parts = [address.line1, address.line2, address.town, address.county].map(part => (part || "").trim()).filter(Boolean);
+        let postcode = (address.postcode || "").trim();
+        // join the county and Eircode with non-breaking spaces so the postcode never wraps onto its own line
+        if (postcode) parts.push([parts.pop(), postcode].filter(Boolean).join(", ").replace(/ /g, "\u00A0"));
+        return parts.join(", ");
     });
 
     // all office addresses as JSON, for structured data
