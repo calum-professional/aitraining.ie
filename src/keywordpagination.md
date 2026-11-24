@@ -22,7 +22,7 @@ pageType: keyword
 {% for course in coursesapifull.courses %}{% if course.searchWords contains value %}{% assign found = found | plus: 1 %}
 <li>
 <h2><a href="/courses/{{ course.name | slug | removeInvalidChars }}/">{{ course.name }}</a></h2>
-<p>{{ course.descrip | truncate: 220 }}</p>
+<p>{{ course.descrip | shorten: 220 }}</p>
 {% assign meta = course | courseMeta %}{% if meta != "" %}<p class="course-list__meta">{{ meta }}</p>{% endif %}
 </li>
 {% endif %}{% endfor %}

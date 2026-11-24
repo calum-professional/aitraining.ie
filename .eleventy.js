@@ -2,7 +2,7 @@ let branding = require('./src/_data/branding.json');
 let site = require('./src/_data/site.json');
 let fs = require('fs');
 let slugifyPackage = require('slugify'); // pinned to 1.5.3, see the "slug" filter
-let { makeSection, slugify, asAccordion, keywordInfo } = require('./src/_includes/makeSection');
+let { makeSection, slugify, removeInvalidChars, asAccordion, keywordInfo } = require('./src/_includes/makeSection');
 
 // this function makes a string safe for json
 // it removes the newline characters
@@ -133,11 +133,7 @@ module.exports = function(config) {
     })
 
     // this filter is to fix the problem with the Azure and other MS courses where there is a : in the name
-    config.addFilter("removeInvalidChars", function(filename) {
-        //console.log(filename);
-        // ":" becomes "-", other characters Windows doesn't allow in file names are dropped (e.g. "Excel ***")
-        return filename.replace(/:/ig, "-").replace(/[*?"<>|]/g, "");
-    });
+    config.addFilter("removeInvalidChars", removeInvalidChars);
 
     config.addFilter("slugify", slugify);
 
@@ -145,7 +141,24 @@ module.exports = function(config) {
     // versions turn "Situations – Call" into "situations-call" instead of "situations---call"
     config.addFilter("slug", str => slugifyPackage(str, { replacement: "-", lower: true }));
 
+    // the /training_courses/ path for a keyword, worked out the same way as keywordpagination.md's permalink
+    let keywordPagePath = word => removeInvalidChars(slugifyPackage(word.trim().replace(/#/g, " sharp").replace(/\+/g, " plus"), { replacement: "-", lower: true }));
+    config.addFilter("keywordPagePath", keywordPagePath);
+
+    // course search words that aren't microsite keywords have no keyword page, so don't link them
+    config.addFilter("hasKeywordPage", (word, keywords) => (keywords || []).some(keyword => keywordPagePath(keyword) == keywordPagePath(word)));
+
     config.addFilter("displayDate", displayDate);
+
+    // shorten text to at most `length` characters, cutting at a word boundary and adding "..."
+    config.addFilter("shorten", (text, length = 220) => {
+        text = String(text || "").trim();
+        if (text.length <= length) return text;
+        let cut = text.slice(0, length - 3);
+        let space = cut.lastIndexOf(" ");
+        if (space > 0) cut = cut.slice(0, space);
+        return cut.replace(/[\s,;:.\-–(]+$/, "") + "...";
+    });
 
     // one office address from site.json, skipping any blank parts, e.g. "26 Upper Pembroke Street, Dublin 2, D02 X361"
     config.addFilter("formatAddress", function(address) {

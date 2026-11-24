@@ -1,6 +1,12 @@
 const fs = require('fs');
 
 
+// ":" becomes "-", other characters Windows doesn't allow in file names are dropped (e.g. "Excel ***").
+// Used for landing page permalinks, so links to those pages must use it too.
+function removeInvalidChars (filename) {
+    return filename.replace(/:/ig, "-").replace(/[*?"<>|]/g, "");
+}
+
 function slugify (str, replaceFullStops) {
     // the 11ty slug filter doesn't remove full stops
     // bootstrap doesn't like ids that have full stops so the option to replace them or not was added
@@ -58,6 +64,7 @@ function toItems(value) {
 module.exports = {
 
     slugify,
+    removeInvalidChars,
 
     // index of landing pages, grouped by keyword, e.g. "Python Training" -> Dublin, Cork, ...
     asAccordion: function (data) {
@@ -68,9 +75,10 @@ module.exports = {
             return result;
         }, {});
 
+        let pagePart = str => removeInvalidChars(slugify(str));
         let items = Object.keys(topics).map(topicName => {
             let topic = topics[topicName];
-            let links = topic.map(search => `<li><a href="/saved_searches/${slugify(search.location)}/${slugify(search.keyword)}/${slugify(search.title)}.html"><span class="visually-hidden">${search.keyword} courses in </span>${search.location}</a></li>`);
+            let links = topic.map(search => `<li><a href="/saved_searches/${pagePart(search.location)}/${pagePart(search.keyword)}/${pagePart(search.title)}.html"><span class="visually-hidden">${search.keyword} courses in </span>${search.location}</a></li>`);
             return `<li class="topic-index__item">
                         <h3>${topic[0].keyword}</h3>
                         <ul class="topic-index__places">${links.join("")}</ul>

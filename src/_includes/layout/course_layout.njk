@@ -61,8 +61,8 @@ layout: base_layout
     <h2 id="related-heading">Related topics</h2>
     <ul class="tag-list">
     {% for searchword in words %}
-      {% if searchword | trim %}
-      <li><a href="/training_courses/{{ searchword | trim | replace("#", " sharp") | replace("+", " plus") | slug | removeInvalidChars }}/">{{ searchword | trim }}</a></li>
+      {% if searchword | trim and searchword | hasKeywordPage(coursesapifull.relatedKeywords) %}
+      <li><a href="/training_courses/{{ searchword | keywordPagePath }}/">{{ searchword | trim }}</a></li>
       {% endif %}
     {% endfor %}
     </ul>

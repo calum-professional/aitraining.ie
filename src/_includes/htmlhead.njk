@@ -13,7 +13,7 @@
       {% set pageDescription = search.title + ". Instructor-led courses from " + site.organisation.name + ". View courses and upcoming dates." %}
     {% elif pageType == "course" %}
       {% set pageTitle = course.name + " Training" %}
-      {% set pageDescription = course.descrip | striptags | truncate(155) %}
+      {% set pageDescription = course.descrip | striptags | shorten(155) %}
     {% elif pageType == "keyword" %}
       {% set pageTitle = keyword + " Training Courses, Dublin, Cork, Limerick, Ireland" %}
       {% set pageDescription = keyword + " training courses in Dublin, Cork, Limerick and live online. Compare courses and book a date with " + site.organisation.name + "." %}
@@ -21,7 +21,7 @@
       {% set pageTitle = "Scheduled " + keywordList + " " + site.homepageTitle %}
       {% set pageDescription = "Upcoming " + keywordList + " course dates in Dublin, Cork, Limerick and live online. Choose a date and book your place." %}
     {% else %}
-      {% set pageTitle = metaTitle or title or (keywordList + " " + site.homepageTitle) %}
+      {% set pageTitle = metaTitle or ((title + " | " + site.organisation.name) if title else (keywordList + " " + site.homepageTitle)) %}
       {% set pageDescription = description or (keywordList + " training courses in Dublin, Cork, Limerick and live online from " + site.organisation.name + ".") %}
     {% endif %}
 
