@@ -9,7 +9,7 @@ pageType: courses
 <header class="page-head">
 <div class="wrap">
 <h1>{% for keyword in site.searchKeywords %}{{ keyword }} {% endfor %}training courses</h1>
-<p class="page-head__lead">Instructor-led courses in Dublin, Cork, Limerick and live online. Choose a course to see what it covers and when it runs.</p>
+<p class="page-head__lead">Instructor-led courses in Dublin, Cork, Limerick and live online. Choose a course to see what it covers and when it runs. <a href="#contact">Contact us</a> with any queries.</p>
 </div>
 </header>
 
