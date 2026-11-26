@@ -280,7 +280,11 @@ Schedule and Courses. All the copy lives in `home.json` so the user can edit it.
     `coursesapifull.js`, build each saved search's `courses` from
     `distinctCourseListWithSchedule` so the schedule is available.
 - **Schedule page:** one section per course, each with a "Course details" link and
-  a dates table.
+  a dates table. The header lead (in `schedule_layout.njk`) is exactly this, word
+  for word, on every site:
+  "Upcoming public dates live online. Choose a date and book your place, or contact
+  us to run a course for your team. In-person training available for your teams at
+  our Dublin, Cork and Limerick offices or at your premises nationwide."
 - On phones, tables become stacked rows with the Book button on the right.
 - **Footer addresses** use a `formatAddress` filter, which joins `line1`, `line2`,
   `town`, `county` and `postcode` with commas, including between county and
